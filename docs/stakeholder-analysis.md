@@ -1,9 +1,9 @@
 # Stakeholder Analysis
 
-Stakeholder	              Role	                     Interest
-Students	        Report and search items	             High
-Administrator	        Manage records	                 High
-Instructor	         Evaluate project                	Medium
+| Stakeholder |	             | Role	|                    | Interest |
+| Students |	        | Report and search items |	         | High |
+| Administrator |	       | Manage records |	               | High |
+| Instructor |	         | Evaluate project |             | Medium |
 
 **Student**
 
