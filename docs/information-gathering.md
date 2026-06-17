@@ -28,8 +28,8 @@ Recovery tracking is useful.
 **Requirement Summary**
 
 ***Required Features:***
-Authentication
-Item Reporting
-Search
-Dashboard
-Record Management
+***Authentication***
+***Item Reporting***
+***Search***
+***Dashboard***
+***Record Management***
