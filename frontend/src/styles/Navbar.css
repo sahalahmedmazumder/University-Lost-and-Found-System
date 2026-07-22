@@ -1,0 +1,127 @@
+/* Reset */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Navbar */
+
+.navbar {
+  width: 100%;
+  background: #0f172a;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-container {
+  width: 90%;
+  max-width: 1300px;
+  height: 72px;
+
+  margin: auto;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Logo */
+
+.logo {
+  font-size: 1.6rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  letter-spacing: 0.5px;
+}
+
+/* Center Navigation */
+
+.nav-links {
+  display: flex;
+  gap: 35px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #d1d5db;
+  font-size: 16px;
+  font-weight: 500;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #38bdf8;
+}
+
+.nav-links a.active {
+  color: white;
+  border-bottom: 2px solid #38bdf8;
+  padding-bottom: 5px;
+}
+
+/* Right Buttons */
+
+.auth-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.login-btn,
+.register-btn {
+  text-decoration: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+/* Login */
+
+.login-btn {
+  color: white;
+  border: 1px solid white;
+}
+
+.login-btn:hover {
+  background: white;
+  color: #0f172a;
+}
+
+/* Register */
+
+.register-btn {
+  background: #2563eb;
+  color: white;
+}
+
+.register-btn:hover {
+  background: #1d4ed8;
+}
+
+/* Responsive */
+
+@media (max-width: 900px) {
+  .navbar-container {
+    flex-direction: column;
+    height: auto;
+    padding: 20px 0;
+    gap: 18px;
+  }
+
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+  }
+
+  .auth-buttons {
+    width: 100%;
+    justify-content: center;
+  }
+}
