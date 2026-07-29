@@ -9,3 +9,7 @@ class LostItem(BaseModel):
     date_lost: str
     contact_name: str
     contact_phone: str
+
+
+class LostItemResponse(LostItem):
+    item_id: str
