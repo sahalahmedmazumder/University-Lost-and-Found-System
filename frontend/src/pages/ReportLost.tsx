@@ -1,53 +1,68 @@
-import { useState } from "react";
-import { createLostItem } from "../services/lostItemService";
+import { useEffect, useState } from "react";
+import {
+  createLostItem,
+  deleteLostItem,
+  getLostItems,
+  updateLostItem,
+} from "../services/lostItemService";
 import "../styles/ReportLost.css";
-import type { LostItem } from "../types/lostItem";
+import type { LostItem, LostItemRecord } from "../types/lostItem";
+
+const emptyForm: LostItem = {
+  item_name: "",
+  category: "",
+  description: "",
+  location: "",
+  date_lost: "",
+  contact_name: "",
+  contact_phone: "",
+};
 
 export default function ReportLost() {
-  const [formData, setFormData] = useState<LostItem>({
-    item_name: "",
-    category: "",
-    description: "",
-    location: "",
-    date_lost: "",
-    contact_name: "",
-    contact_phone: "",
-  });
-
+  const [formData, setFormData] = useState<LostItem>(emptyForm);
+  const [items, setItems] = useState<LostItemRecord[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  const fetchItems = async () => {
+    try {
+      const data = await getLostItems();
+      setItems(data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchItems();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
   ) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     setLoading(true);
     setMessage("");
 
     try {
-      await createLostItem(formData);
+      if (editingId) {
+        await updateLostItem(editingId, formData);
+        setMessage("Lost item updated successfully!");
+      } else {
+        await createLostItem(formData);
+        setMessage("Lost item reported successfully!");
+      }
 
-      setMessage("Lost item reported successfully!");
-
-      setFormData({
-        item_name: "",
-        category: "",
-        description: "",
-        location: "",
-        date_lost: "",
-        contact_name: "",
-        contact_phone: "",
-      });
+      setFormData(emptyForm);
+      setEditingId(null);
+      await fetchItems();
     } catch (error) {
       console.error(error);
       setMessage("Failed to submit report.");
@@ -56,10 +71,35 @@ export default function ReportLost() {
     }
   };
 
+  const handleEdit = (item: LostItemRecord) => {
+    const { item_id, ...rest } = item;
+    setFormData(rest);
+    setEditingId(item_id);
+    setMessage("");
+  };
+
+  const handleCancelEdit = () => {
+    setFormData(emptyForm);
+    setEditingId(null);
+  };
+
+  const handleDelete = async (itemId: string) => {
+    if (!window.confirm("Delete this item?")) return;
+
+    try {
+      await deleteLostItem(itemId);
+      if (editingId === itemId) handleCancelEdit();
+      await fetchItems();
+    } catch (error) {
+      console.error(error);
+      setMessage("Failed to delete item.");
+    }
+  };
+
   return (
     <div className="report-container">
       <div className="report-card">
-        <h1>Report Lost Item</h1>
+        <h1>{editingId ? "Edit Lost Item" : "Report Lost Item"}</h1>
         <p className="subtitle">
           Fill in the details below to report your lost item.
         </p>
@@ -153,9 +193,62 @@ export default function ReportLost() {
           {message && <p className="success">{message}</p>}
 
           <button type="submit" disabled={loading}>
-            {loading ? "Submitting..." : "Submit Report"}
+            {loading
+              ? "Submitting..."
+              : editingId
+                ? "Update Report"
+                : "Submit Report"}
           </button>
+          {editingId && (
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={handleCancelEdit}
+            >
+              Cancel
+            </button>
+          )}
         </form>
+      </div>
+
+      <div className="report-card table-card">
+        <h2>Submitted Lost Items</h2>
+        {items.length === 0 ? (
+          <p className="subtitle">No items reported yet.</p>
+        ) : (
+          <table className="items-table">
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Location</th>
+                <th>Date Lost</th>
+                <th>Contact</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((item) => (
+                <tr key={item.item_id}>
+                  <td>{item.item_name}</td>
+                  <td>{item.category}</td>
+                  <td>{item.location}</td>
+                  <td>{item.date_lost}</td>
+                  <td>{item.contact_name}</td>
+                  <td className="actions-cell">
+                    <button onClick={() => handleEdit(item)}>Edit</button>
+                    <button
+                      className="delete-btn"
+                      onClick={() => handleDelete(item.item_id)}
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </div>
     </div>
   );
