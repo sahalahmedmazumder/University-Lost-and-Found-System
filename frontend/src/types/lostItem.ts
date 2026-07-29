@@ -7,3 +7,7 @@ export interface LostItem {
   contact_name: string;
   contact_phone: string;
 }
+
+export interface LostItemRecord extends LostItem {
+  item_id: string;
+}
