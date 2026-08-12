@@ -6,3 +6,4 @@ python-jose[cryptography]
 passlib[bcrypt]
 email-validator
 pwdlib[argon2]
+pydantic-settings
