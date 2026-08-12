@@ -1,5 +1,3 @@
-// src/context/AuthContext.tsx
-
 import {
     createContext,
     useContext,
@@ -24,18 +22,17 @@ interface AuthContextType {
     logout: () => void;
 }
 
-const AuthContext = createContext<AuthContextType | undefined>(
-    undefined
-);
+export const AuthContext = createContext<
+    AuthContextType | undefined
+>(undefined);
 
-const API_URL = "const API_URL = import.meta.env.VITE_API_URL;";
+const API_URL = import.meta.env.VITE_API_URL;
 
 export function AuthProvider({
     children,
 }: {
     children: ReactNode;
 }) {
-    // Load user immediately from localStorage
     const [user, setUser] = useState<User | null>(() => {
         const storedUser = localStorage.getItem("user");
 
@@ -51,12 +48,12 @@ export function AuthProvider({
         }
     });
 
-    // Load token immediately from localStorage
     const [accessToken, setAccessToken] =
         useState<string | null>(() => {
             return localStorage.getItem("access_token");
         });
 
+    // LOGIN
     const login = async (data: LoginRequest) => {
         const response = await fetch(
             `${API_URL}/auth/login`,
@@ -81,29 +78,26 @@ export function AuthProvider({
         const result: LoginResponse =
             await response.json();
 
-        // Save token
         localStorage.setItem(
             "access_token",
             result.access_token
         );
 
-        // Keep compatibility with your existing code
         localStorage.setItem(
             "token",
             result.access_token
         );
 
-        // Save user
         localStorage.setItem(
             "user",
             JSON.stringify(result.user)
         );
 
-        // Update React state immediately
         setAccessToken(result.access_token);
         setUser(result.user);
     };
 
+    // REGISTER
     const register = async (
         data: RegisterRequest
     ) => {
@@ -129,6 +123,7 @@ export function AuthProvider({
         }
     };
 
+    // LOGOUT
     const logout = () => {
         localStorage.removeItem("access_token");
         localStorage.removeItem("token");
