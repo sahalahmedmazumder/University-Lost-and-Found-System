@@ -1,3 +1,7 @@
 fastapi
 uvicorn
 python-dotenv
+boto3
+python-jose[cryptography]
+passlib[bcrypt]
+email-validator
