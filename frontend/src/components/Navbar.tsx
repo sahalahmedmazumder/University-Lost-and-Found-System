@@ -1,41 +1,100 @@
-import { NavLink } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import "../styles/Navbar.css";
 
-function Navbar() {
-  return (
-    <header className="navbar">
-      <div className="navbar-container">
-        {/* Logo */}
-        <NavLink to="/" className="logo">
-          IUB Lost & Found
-        </NavLink>
+export default function Navbar() {
+    const navigate = useNavigate();
 
-        {/* Navigation Links */}
-        <nav className="nav-links">
-          <NavLink to="/" end>
-            Home
-          </NavLink>
+    const { user, logout, isAuthenticated } = useAuth();
 
-          <NavLink to="/browse-items">Browse Items</NavLink>
+    const handleLogout = () => {
+        logout();
+        navigate("/login");
+    };
 
-          <NavLink to="/report-lost">Report Lost</NavLink>
+    return (
+        <nav className="navbar">
+            <div className="navbar-container">
 
-          <NavLink to="/report-found">Report Found</NavLink>
+                {/* Logo */}
+                <Link to="/" className="navbar-logo">
+                    University Lost & Found
+                </Link>
+
+                {/* Navigation */}
+                <div className="navbar-links">
+
+                    <Link to="/">
+                        Home
+                    </Link>
+
+                    <Link to="/browse-items">
+                        Browse Items
+                    </Link>
+
+                    {isAuthenticated && (
+                        <>
+                            <Link to="/report-lost">
+                                Report Lost
+                            </Link>
+
+                            <Link to="/report-found">
+                                Report Found
+                            </Link>
+
+                            <Link to="/my-reports">
+                                My Reports
+                            </Link>
+                        </>
+                    )}
+
+                    {/* Admin */}
+                    {isAuthenticated &&
+                        user?.role === "admin" && (
+                            <Link to="/admin/dashboard">
+                                Admin Dashboard
+                            </Link>
+                        )}
+
+                </div>
+
+                {/* Right side */}
+                <div className="navbar-auth">
+
+                    {isAuthenticated ? (
+                        <>
+                            <span className="navbar-user">
+                                Hi, {user?.name}
+                            </span>
+
+                            <button
+                                className="logout-btn"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <>
+                            <Link
+                                to="/login"
+                                className="login-btn"
+                            >
+                                Login
+                            </Link>
+
+                            <Link
+                                to="/register"
+                                className="register-btn"
+                            >
+                                Register
+                            </Link>
+                        </>
+                    )}
+
+                </div>
+
+            </div>
         </nav>
-
-        {/* Authentication */}
-        <div className="auth-buttons">
-          <NavLink to="/login" className="login-btn">
-            Login
-          </NavLink>
-
-          <NavLink to="/register" className="register-btn">
-            Register
-          </NavLink>
-        </div>
-      </div>
-    </header>
-  );
+    );
 }
-
-export default Navbar;

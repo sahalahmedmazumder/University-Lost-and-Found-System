@@ -16,3 +16,4 @@ dynamodb = boto3.resource(
 )
 
 lost_items_table = dynamodb.Table("LostItems")
+found_items_table = dynamodb.Table("FoundItems")

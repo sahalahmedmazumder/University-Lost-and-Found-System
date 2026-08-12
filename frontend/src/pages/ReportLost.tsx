@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import {
   createLostItem,
   deleteLostItem,
-  getLostItems,
+  getMyLostItems,
   updateLostItem,
 } from "../services/lostItemService";
 import "../styles/ReportLost.css";
@@ -27,7 +27,7 @@ export default function ReportLost() {
 
   const fetchItems = async () => {
     try {
-      const data = await getLostItems();
+      const data = await getMyLostItems();
       setItems(data);
     } catch (error) {
       console.error(error);
@@ -41,13 +41,17 @@ export default function ReportLost() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    >
   ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     setLoading(true);
     setMessage("");
 
@@ -62,6 +66,7 @@ export default function ReportLost() {
 
       setFormData(emptyForm);
       setEditingId(null);
+
       await fetchItems();
     } catch (error) {
       console.error(error);
@@ -73,6 +78,7 @@ export default function ReportLost() {
 
   const handleEdit = (item: LostItemRecord) => {
     const { item_id, ...rest } = item;
+
     setFormData(rest);
     setEditingId(item_id);
     setMessage("");
@@ -88,7 +94,11 @@ export default function ReportLost() {
 
     try {
       await deleteLostItem(itemId);
-      if (editingId === itemId) handleCancelEdit();
+
+      if (editingId === itemId) {
+        handleCancelEdit();
+      }
+
       await fetchItems();
     } catch (error) {
       console.error(error);
@@ -99,7 +109,10 @@ export default function ReportLost() {
   return (
     <div className="report-container">
       <div className="report-card">
-        <h1>{editingId ? "Edit Lost Item" : "Report Lost Item"}</h1>
+        <h1>
+          {editingId ? "Edit Lost Item" : "Report Lost Item"}
+        </h1>
+
         <p className="subtitle">
           Fill in the details below to report your lost item.
         </p>
@@ -107,6 +120,7 @@ export default function ReportLost() {
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <label>Item Name</label>
+
             <input
               type="text"
               name="item_name"
@@ -118,6 +132,7 @@ export default function ReportLost() {
 
           <div className="form-group">
             <label>Category</label>
+
             <select
               name="category"
               value={formData.category}
@@ -137,6 +152,7 @@ export default function ReportLost() {
 
           <div className="form-group">
             <label>Description</label>
+
             <textarea
               rows={4}
               name="description"
@@ -148,6 +164,7 @@ export default function ReportLost() {
 
           <div className="form-group">
             <label>Location Lost</label>
+
             <input
               type="text"
               name="location"
@@ -159,6 +176,7 @@ export default function ReportLost() {
 
           <div className="form-group">
             <label>Date Lost</label>
+
             <input
               type="date"
               name="date_lost"
@@ -170,6 +188,7 @@ export default function ReportLost() {
 
           <div className="form-group">
             <label>Contact Name</label>
+
             <input
               type="text"
               name="contact_name"
@@ -181,6 +200,7 @@ export default function ReportLost() {
 
           <div className="form-group">
             <label>Contact Phone</label>
+
             <input
               type="text"
               name="contact_phone"
@@ -190,15 +210,23 @@ export default function ReportLost() {
             />
           </div>
 
-          {message && <p className="success">{message}</p>}
+          {message && (
+            <p className="success">
+              {message}
+            </p>
+          )}
 
-          <button type="submit" disabled={loading}>
+          <button
+            type="submit"
+            disabled={loading}
+          >
             {loading
               ? "Submitting..."
               : editingId
                 ? "Update Report"
                 : "Submit Report"}
           </button>
+
           {editingId && (
             <button
               type="button"
@@ -212,9 +240,12 @@ export default function ReportLost() {
       </div>
 
       <div className="report-card table-card">
-        <h2>Submitted Lost Items</h2>
+        <h2>My Lost Items</h2>
+
         {items.length === 0 ? (
-          <p className="subtitle">No items reported yet.</p>
+          <p className="subtitle">
+            You haven't reported any lost items yet.
+          </p>
         ) : (
           <table className="items-table">
             <thead>
@@ -227,6 +258,7 @@ export default function ReportLost() {
                 <th>Actions</th>
               </tr>
             </thead>
+
             <tbody>
               {items.map((item) => (
                 <tr key={item.item_id}>
@@ -235,11 +267,19 @@ export default function ReportLost() {
                   <td>{item.location}</td>
                   <td>{item.date_lost}</td>
                   <td>{item.contact_name}</td>
+
                   <td className="actions-cell">
-                    <button onClick={() => handleEdit(item)}>Edit</button>
+                    <button
+                      onClick={() => handleEdit(item)}
+                    >
+                      Edit
+                    </button>
+
                     <button
                       className="delete-btn"
-                      onClick={() => handleDelete(item.item_id)}
+                      onClick={() =>
+                        handleDelete(item.item_id)
+                      }
                     >
                       Delete
                     </button>

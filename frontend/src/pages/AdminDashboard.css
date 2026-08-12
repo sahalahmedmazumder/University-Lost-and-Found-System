@@ -1,0 +1,962 @@
+/* =========================================================
+   ADMIN DASHBOARD
+========================================================= */
+
+.admin-dashboard {
+    min-height: calc(100vh - 70px);
+    padding: 40px 32px 70px;
+    background: #121318;
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.admin-dashboard-header {
+    max-width: 1400px;
+    margin: 0 auto 32px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.admin-label {
+    display: block;
+    margin-bottom: 6px;
+
+    color: #60a5fa;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.admin-dashboard-header h1 {
+    margin: 0 0 8px;
+
+    font-size: 34px;
+    line-height: 1.2;
+    font-weight: 750;
+}
+
+.admin-dashboard-header p {
+    margin: 0;
+
+    color: #9295a1;
+    font-size: 15px;
+}
+
+
+/* HEADER BUTTONS */
+
+.admin-header-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.refresh-button,
+.admin-back-button {
+    min-height: 42px;
+
+    padding: 0 18px;
+
+    border: 1px solid #303442;
+    border-radius: 8px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.refresh-button {
+    background: #202431;
+    color: #ffffff;
+}
+
+.refresh-button:hover {
+    background: #292e3d;
+    border-color: #414758;
+}
+
+.admin-back-button {
+    background: #3b82f6;
+    border-color: #3b82f6;
+    color: white;
+}
+
+.admin-back-button:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+}
+
+
+/* =========================================================
+   STATISTICS
+========================================================= */
+
+.admin-stats {
+    max-width: 1400px;
+    margin: 0 auto 38px;
+
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.admin-stat-card {
+    min-height: 100px;
+
+    padding: 22px 24px;
+
+    background: #1a1c24;
+    border: 1px solid #2b2e39;
+    border-radius: 12px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.admin-stat-card:hover {
+    transform: translateY(-2px);
+
+    background: #1d2029;
+    border-color: #3a3e4d;
+}
+
+.admin-stat-card span {
+    margin-bottom: 8px;
+
+    color: #9295a1;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.admin-stat-card strong {
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 750;
+}
+
+.admin-stat-card.lost-stat strong {
+    color: #ff5b5b;
+}
+
+.admin-stat-card.found-stat strong {
+    color: #20c47a;
+}
+
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.admin-section {
+    max-width: 1400px;
+    margin: 0 auto 38px;
+
+    background: #191b23;
+
+    border: 1px solid #2c303c;
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.18);
+}
+
+
+/* =========================================================
+   SECTION HEADER
+========================================================= */
+
+.admin-section-header {
+    padding: 25px 28px 20px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    border-bottom: 1px solid #2b2e39;
+}
+
+.admin-section-header h2 {
+    margin: 0 0 6px;
+
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.admin-section-header p {
+    margin: 0;
+
+    color: #9295a1;
+    font-size: 14px;
+}
+
+.item-count {
+    color: #9295a1;
+
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.item-count strong {
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   FILTER AREA
+========================================================= */
+
+.admin-filters {
+    margin: 0;
+    padding: 22px 28px;
+
+    display: grid;
+
+    /*
+       Search gets more space,
+       dropdowns get medium space,
+       date gets smaller space.
+    */
+    grid-template-columns:
+        minmax(300px, 1.8fr)
+        minmax(160px, 0.8fr)
+        minmax(180px, 0.9fr)
+        minmax(170px, 0.7fr)
+        auto;
+
+    gap: 12px;
+
+    background: #171920;
+
+    border-bottom: 1px solid #2b2e39;
+}
+
+
+/* SEARCH */
+
+.admin-search {
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 15px;
+
+    background: #20232c;
+
+    border: 1px solid #363a48;
+    border-radius: 9px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-search:focus-within {
+    border-color: #4f8cff;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 140, 255, 0.12);
+}
+
+.admin-search span {
+    margin-right: 9px;
+
+    font-size: 17px;
+}
+
+.admin-search input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font-size: 14px;
+}
+
+.admin-search input::placeholder {
+    color: #777c8b;
+}
+
+
+/* DROPDOWNS */
+
+.admin-filters select,
+.admin-filters input[type="date"] {
+    width: 100%;
+    height: 48px;
+
+    padding: 0 14px;
+
+    background: #20232c;
+
+    border: 1px solid #363a48;
+    border-radius: 9px;
+
+    color: #ffffff;
+
+    font-size: 14px;
+
+    outline: none;
+
+    cursor: pointer;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.admin-filters select:hover,
+.admin-filters input[type="date"]:hover {
+    border-color: #4a4f60;
+}
+
+.admin-filters select:focus,
+.admin-filters input[type="date"]:focus {
+    border-color: #4f8cff;
+
+    box-shadow:
+        0 0 0 3px rgba(79, 140, 255, 0.12);
+}
+
+
+/* DATE COLOR */
+
+.admin-filters input[type="date"] {
+    color-scheme: dark;
+}
+
+
+/* CLEAR BUTTON */
+
+.clear-filter-button {
+    height: 48px;
+
+    padding: 0 18px;
+
+    border: 1px solid #3b4252;
+    border-radius: 9px;
+
+    background: #252936;
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+}
+
+.clear-filter-button:hover {
+    background: #303544;
+    border-color: #50576a;
+}
+
+
+/* =========================================================
+   ITEMS TABLE
+========================================================= */
+
+.admin-table-container {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+/* IMPORTANT:
+   Your current TSX uses .admin-items-table
+*/
+
+.admin-items-table {
+    width: 100%;
+
+    min-width: 1050px;
+
+    border-collapse: collapse;
+
+    table-layout: auto;
+}
+
+
+/* TABLE HEADER */
+
+.admin-items-table thead {
+    background: #15171e;
+}
+
+.admin-items-table th {
+    padding: 17px 18px;
+
+    border-bottom: 1px solid #303441;
+
+    color: #969baa;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+
+    white-space: nowrap;
+}
+
+
+/* TABLE BODY */
+
+.admin-items-table td {
+    padding: 19px 18px;
+
+    border-bottom: 1px solid #292c36;
+
+    color: #d9dbe2;
+
+    font-size: 14px;
+
+    vertical-align: middle;
+}
+
+.admin-items-table tbody tr {
+    transition: background 0.15s ease;
+}
+
+.admin-items-table tbody tr:hover {
+    background: #20232c;
+}
+
+.admin-items-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* ITEM NAME */
+
+.admin-items-table td strong {
+    color: #ffffff;
+
+    font-size: 14px;
+    font-weight: 650;
+}
+
+
+/* DESCRIPTION */
+
+.description-cell {
+    max-width: 280px;
+
+    color: #a9adb8 !important;
+
+    line-height: 1.5;
+}
+
+
+/* LOCATION */
+
+.admin-items-table td:nth-child(5) {
+    color: #c7cad3;
+}
+
+
+/* DATE */
+
+.admin-items-table td:nth-child(6) {
+    color: #b9bdc8;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.item-status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 62px;
+
+    padding: 6px 12px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.item-status.lost {
+    background: rgba(248, 87, 87, 0.14);
+
+    color: #ff6b6b;
+
+    border: 1px solid rgba(248, 87, 87, 0.25);
+}
+
+.item-status.found {
+    background: rgba(32, 196, 122, 0.14);
+
+    color: #2bd98a;
+
+    border: 1px solid rgba(32, 196, 122, 0.25);
+}
+
+
+/* =========================================================
+   CATEGORY
+========================================================= */
+
+.category-badge {
+    display: inline-block;
+
+    padding: 6px 10px;
+
+    background: #252936;
+
+    border: 1px solid #353a48;
+
+    border-radius: 6px;
+
+    color: #b9bdc8;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-cell {
+    min-width: 145px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.contact-cell strong {
+    color: #ffffff;
+
+    font-size: 13px;
+}
+
+.contact-cell span {
+    color: #60a5fa;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   DELETE ITEM
+========================================================= */
+
+.item-delete-button {
+    min-width: 72px;
+
+    padding: 8px 13px;
+
+    border: 1px solid rgba(248, 113, 113, 0.18);
+    border-radius: 7px;
+
+    background: rgba(248, 113, 113, 0.12);
+
+    color: #f87171;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.15s ease;
+}
+
+.item-delete-button:hover {
+    background: rgba(248, 113, 113, 0.22);
+
+    border-color: rgba(248, 113, 113, 0.35);
+
+    transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   USERS TABLE
+========================================================= */
+
+.admin-users-table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+.admin-users-table th {
+    padding: 16px 20px;
+
+    background: #15171e;
+
+    color: #969baa;
+
+    text-align: left;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+}
+
+.admin-users-table td {
+    padding: 17px 20px;
+
+    border-top: 1px solid #292c36;
+
+    color: #d9dbe2;
+
+    font-size: 14px;
+}
+
+.admin-users-table tbody tr:hover {
+    background: #20232c;
+}
+
+
+/* =========================================================
+   USER ROLE
+========================================================= */
+
+.role-badge {
+    display: inline-flex;
+
+    padding: 6px 11px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    text-transform: capitalize;
+}
+
+.admin-role {
+    background: rgba(96, 165, 250, 0.14);
+
+    border: 1px solid rgba(96, 165, 250, 0.25);
+
+    color: #60a5fa;
+}
+
+.user-role {
+    background: rgba(148, 163, 184, 0.12);
+
+    border: 1px solid rgba(148, 163, 184, 0.2);
+
+    color: #aab2c0;
+}
+
+
+/* =========================================================
+   USER STATUS
+========================================================= */
+
+.status-badge {
+    display: inline-flex;
+
+    padding: 6px 11px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.active-status {
+    background: rgba(34, 197, 94, 0.12);
+
+    color: #4ade80;
+}
+
+.flagged-status {
+    background: rgba(248, 113, 113, 0.12);
+
+    color: #f87171;
+}
+
+
+/* =========================================================
+   USER ACTIONS
+========================================================= */
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.flag-button,
+.unflag-button,
+.delete-button {
+    padding: 8px 13px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+}
+
+.flag-button {
+    border: 1px solid rgba(251, 191, 36, 0.2);
+
+    background: rgba(251, 191, 36, 0.12);
+
+    color: #fbbf24;
+}
+
+.flag-button:hover {
+    background: rgba(251, 191, 36, 0.2);
+}
+
+.unflag-button {
+    border: 1px solid rgba(74, 222, 128, 0.2);
+
+    background: rgba(74, 222, 128, 0.1);
+
+    color: #4ade80;
+}
+
+.unflag-button:hover {
+    background: rgba(74, 222, 128, 0.18);
+}
+
+.delete-button {
+    border: 1px solid rgba(248, 113, 113, 0.2);
+
+    background: rgba(248, 113, 113, 0.12);
+
+    color: #f87171;
+}
+
+.delete-button:hover {
+    background: rgba(248, 113, 113, 0.22);
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+.admin-loading,
+.section-loading {
+    padding: 60px;
+
+    text-align: center;
+
+    color: #9295a1;
+
+    font-size: 15px;
+}
+
+.loading-spinner {
+    width: 32px;
+    height: 32px;
+
+    margin: 0 auto 15px;
+
+    border: 3px solid #2d3140;
+    border-top-color: #60a5fa;
+
+    border-radius: 50%;
+
+    animation: adminSpin 0.8s linear infinite;
+}
+
+@keyframes adminSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.admin-error {
+    max-width: 1400px;
+
+    margin: 0 auto 25px;
+
+    padding: 15px 20px;
+
+    background: #2a1719;
+
+    border: 1px solid #7f1d1d;
+
+    border-radius: 9px;
+
+    color: #f87171;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.admin-empty {
+    padding: 70px 30px;
+
+    text-align: center;
+
+    color: #9295a1;
+}
+
+.empty-icon {
+    margin-bottom: 12px;
+
+    font-size: 38px;
+}
+
+.admin-empty h3 {
+    margin: 0 0 6px;
+
+    color: #ffffff;
+
+    font-size: 18px;
+}
+
+.admin-empty p {
+    margin: 0;
+
+    color: #777c8b;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .admin-dashboard {
+        padding: 30px 20px 60px;
+    }
+
+    .admin-filters {
+        grid-template-columns:
+            1fr 1fr;
+
+        gap: 12px;
+    }
+
+    .admin-search {
+        grid-column: span 2;
+    }
+
+    .clear-filter-button {
+        width: 100%;
+    }
+
+    .admin-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .admin-dashboard {
+        padding: 25px 12px 50px;
+    }
+
+    .admin-dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-header-actions {
+        width: 100%;
+    }
+
+    .refresh-button,
+    .admin-back-button {
+        flex: 1;
+    }
+
+    .admin-dashboard-header h1 {
+        font-size: 28px;
+    }
+
+    .admin-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .admin-section-header {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .admin-filters {
+        padding: 18px;
+
+        grid-template-columns: 1fr;
+    }
+
+    .admin-search {
+        grid-column: auto;
+    }
+
+    .admin-items-table th,
+    .admin-items-table td {
+        padding: 15px;
+    }
+
+    .admin-users-table th,
+    .admin-users-table td {
+        padding: 14px;
+    }
+}

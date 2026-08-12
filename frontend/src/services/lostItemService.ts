@@ -1,36 +1,71 @@
-import type { LostItem, LostItemRecord } from "../types/lostItem";
+import axios from "axios";
+import type { LostItem } from "../types/lostItem";
 
-const API_URL = "http://localhost:8000/lost-items";
+const API_URL = "http://localhost:8000";
 
-export async function createLostItem(item: LostItem) {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(item),
-  });
-  if (!response.ok) throw new Error("Failed to report lost item.");
-  return response.json();
+function getAuthHeader() {
+    const token = localStorage.getItem("token");
+
+    return {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    };
 }
 
-export async function getLostItems(): Promise<LostItemRecord[]> {
-  const response = await fetch(`${API_URL}/`);
-  if (!response.ok) throw new Error("Failed to fetch lost items.");
-  const result = await response.json();
-  return result.data;
+export async function createLostItem(data: LostItem) {
+    const response = await axios.post(
+        `${API_URL}/lost-items/`,
+        data,
+        getAuthHeader()
+    );
+
+    return response.data;
 }
 
-export async function updateLostItem(itemId: string, item: LostItem) {
-  const response = await fetch(`${API_URL}/${itemId}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(item),
-  });
-  if (!response.ok) throw new Error("Failed to update lost item.");
-  return response.json();
+export async function getLostItems() {
+    const response = await axios.get(
+        `${API_URL}/lost-items/`
+    );
+
+    return response.data.data;
+}
+
+export async function getMyLostItems() {
+    const response = await axios.get(
+        `${API_URL}/lost-items/my-items`,
+        getAuthHeader()
+    );
+
+    return response.data.data;
+}
+
+export async function getLostItem(itemId: string) {
+    const response = await axios.get(
+        `${API_URL}/lost-items/${itemId}`
+    );
+
+    return response.data.data;
+}
+
+export async function updateLostItem(
+    itemId: string,
+    data: LostItem
+) {
+    const response = await axios.put(
+        `${API_URL}/lost-items/${itemId}`,
+        data,
+        getAuthHeader()
+    );
+
+    return response.data;
 }
 
 export async function deleteLostItem(itemId: string) {
-  const response = await fetch(`${API_URL}/${itemId}`, { method: "DELETE" });
-  if (!response.ok) throw new Error("Failed to delete lost item.");
-  return response.json();
+    const response = await axios.delete(
+        `${API_URL}/lost-items/${itemId}`,
+        getAuthHeader()
+    );
+
+    return response.data;
 }

@@ -1,0 +1,158 @@
+.myreports-page {
+    width: 100%;
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Top card */
+.myreports-page .report-card:first-child {
+    text-align: center;
+}
+
+/* My Reports title */
+.myreports-page h1 {
+    color: #000000 !important;
+    text-align: center;
+    font-size: 42px;
+    margin: 0 0 10px 0;
+}
+
+/* Subtitle */
+.myreports-page .subtitle {
+    text-align: center;
+    color: #666;
+    margin: 0 0 25px 0;
+}
+
+/* Filter */
+.filter-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.filter-container select {
+    padding: 10px 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #333;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Cards */
+.report-card {
+    width: 100%;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 25px;
+    margin-bottom: 25px;
+    box-sizing: border-box;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* Table card */
+.table-card {
+    overflow-x: auto;
+}
+
+/* Table */
+.items-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0 auto;
+}
+
+.items-table th,
+.items-table td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+.items-table th {
+    background: #f5f5f5;
+    color: #222;
+    font-weight: 600;
+}
+
+.items-table td {
+    color: #555;
+}
+
+/* Status */
+.badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.badge.lost {
+    background: #f44336;
+    color: white;
+}
+
+.badge.found {
+    background: #22b573;
+    color: white;
+}
+
+/* Actions */
+.actions-cell {
+    text-align: center !important;
+    white-space: nowrap;
+}
+
+.actions-cell button {
+    border: none;
+    padding: 7px 12px;
+    border-radius: 5px;
+    margin: 0 4px;
+    cursor: pointer;
+    color: white;
+    font-size: 13px;
+}
+
+.actions-cell .edit-btn {
+    background: #2196f3;
+}
+
+.actions-cell .delete-btn {
+    background: #f44336;
+}
+
+.actions-cell button:hover {
+    opacity: 0.85;
+}
+
+/* Empty message */
+.myreports-page .table-card > p {
+    text-align: center;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .myreports-page {
+        margin: 20px auto;
+        padding: 10px;
+    }
+
+    .myreports-page h1 {
+        font-size: 32px;
+    }
+
+    .report-card {
+        padding: 15px;
+    }
+
+    .items-table {
+        min-width: 700px;
+    }
+}
