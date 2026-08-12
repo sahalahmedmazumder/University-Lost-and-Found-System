@@ -5,3 +5,4 @@ boto3
 python-jose[cryptography]
 passlib[bcrypt]
 email-validator
+pwdlib[argon2]
