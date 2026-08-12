@@ -1,10 +1,10 @@
 import axios from "axios";
 
 import type {
-  LoginRequest,
-  LoginResponse,
-  RegisterRequest,
-  User,
+    LoginRequest,
+    LoginResponse,
+    RegisterRequest,
+    User,
 } from "../types/User";
 
 const API_URL = "http://127.0.0.1:8000";

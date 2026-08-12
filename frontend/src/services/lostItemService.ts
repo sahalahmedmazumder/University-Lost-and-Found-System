@@ -1,49 +1,26 @@
-import axios from "axios";
 import type { LostItem } from "../types/lostItem";
-
-const API_URL = "http://localhost:8000";
-
-function getAuthHeader() {
-    const token = localStorage.getItem("token");
-
-    return {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    };
-}
+import api from "./api";
 
 export async function createLostItem(data: LostItem) {
-    const response = await axios.post(
-        `${API_URL}/lost-items/`,
-        data,
-        getAuthHeader()
-    );
+    const response = await api.post("/lost-items/", data);
 
     return response.data;
 }
 
 export async function getLostItems() {
-    const response = await axios.get(
-        `${API_URL}/lost-items/`
-    );
+    const response = await api.get("/lost-items/");
 
     return response.data.data;
 }
 
 export async function getMyLostItems() {
-    const response = await axios.get(
-        `${API_URL}/lost-items/my-items`,
-        getAuthHeader()
-    );
+    const response = await api.get("/lost-items/my-items");
 
     return response.data.data;
 }
 
 export async function getLostItem(itemId: string) {
-    const response = await axios.get(
-        `${API_URL}/lost-items/${itemId}`
-    );
+    const response = await api.get(`/lost-items/${itemId}`);
 
     return response.data.data;
 }
@@ -52,20 +29,16 @@ export async function updateLostItem(
     itemId: string,
     data: LostItem
 ) {
-    const response = await axios.put(
-        `${API_URL}/lost-items/${itemId}`,
-        data,
-        getAuthHeader()
+    const response = await api.put(
+        `/lost-items/${itemId}`,
+        data
     );
 
     return response.data;
 }
 
 export async function deleteLostItem(itemId: string) {
-    const response = await axios.delete(
-        `${API_URL}/lost-items/${itemId}`,
-        getAuthHeader()
-    );
+    const response = await api.delete(`/lost-items/${itemId}`);
 
     return response.data;
 }
