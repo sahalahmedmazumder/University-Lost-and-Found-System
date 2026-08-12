@@ -1,18 +1,25 @@
 from fastapi import Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import (
+    OAuth2PasswordBearer,
+    HTTPBearer,
+    HTTPAuthorizationCredentials,
+)
 
 from app.auth.jwt import verify_token
+from app.config import dynamodb
 
 
-# Used by the normal login-protected routes
+# Users table
+users_table = dynamodb.Table("Users")
+
+
+# Used by normal login-protected routes
 oauth2_scheme = OAuth2PasswordBearer(
     tokenUrl="/auth/login"
 )
 
 
 # Used for admin routes
-# This gives Swagger a simple "Value" field
-# where you can paste the JWT token.
 bearer_scheme = HTTPBearer()
 
 
@@ -28,6 +35,43 @@ def get_current_user(
         )
 
     return payload
+
+
+def require_active_user(
+    current_user=Depends(get_current_user),
+):
+    # Get user ID from JWT
+    user_id = current_user.get("user_id")
+
+    if not user_id:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid user token",
+        )
+
+    # Get the latest user data from DynamoDB
+    response = users_table.get_item(
+        Key={
+            "user_id": user_id
+        }
+    )
+
+    user = response.get("Item")
+
+    if not user:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="User not found",
+        )
+
+    # Check if the user is flagged
+    if user.get("flagged", False):
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Your account has been flagged. You cannot submit reports.",
+        )
+
+    return current_user
 
 
 def get_current_admin(

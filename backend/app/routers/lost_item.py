@@ -1,7 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 
-from app.auth.dependencies import get_current_user
+from app.auth.dependencies import (
+    get_current_user,
+    require_active_user,
+)
+
 from app.schemas.lost_item import LostItem
+
 from app.services.lost_item_service import (
     create_lost_item,
     delete_lost_item,
@@ -10,6 +15,7 @@ from app.services.lost_item_service import (
     get_my_lost_items,
     update_lost_item,
 )
+
 
 router = APIRouter(
     prefix="/lost-items",
@@ -24,7 +30,7 @@ router = APIRouter(
 @router.post("/")
 async def create_lost_item_route(
     item: LostItem,
-    current_user=Depends(get_current_user),
+    current_user=Depends(require_active_user),
 ):
     saved_item = create_lost_item(
         item,
