@@ -7,7 +7,8 @@ import type {
     User,
 } from "../types/User";
 
-const API_URL = "import.meta.env.VITE_API_URL";
+// Do NOT put quotation marks around this
+const API_URL = import.meta.env.VITE_API_URL;
 
 /* =========================
    REGISTER
@@ -43,8 +44,6 @@ export async function login(
 
 export function saveToken(token: string) {
     localStorage.setItem("access_token", token);
-
-    // Keep this for compatibility with your existing app
     localStorage.setItem("token", token);
 }
 
